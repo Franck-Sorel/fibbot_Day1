@@ -1,0 +1,37 @@
+name: Minimal Action Implementation
+
+on: 
+  push:
+    branches:
+      - main
+    pull_request:
+      - main
+
+jobs: 
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: action-rs/toolchain@v1
+        with:
+          toolchain: stable #specifies a the latest rust version to install
+          override: true #override the default toolchain for the job
+          
+      - name: Build the project
+        run: cargo build --release
+
+      - name: print
+        run: ./target/debug/fibbot
+
+      - name: Confirm Hello word in logs
+        run: |
+          if grep -q "Hello, world" $GITHUB_ENV; then
+            echo "Hello, world' found in logs ! "  
+         else 
+            echo "'Hello world' not found in logs"
+            exit 1
+         fi
