@@ -1,12 +1,12 @@
 name: Minimal Action Implementation
 
-on: 
+on:
   pull_request:
     types: [opened, synchronize]
-  push: 
+  push:
     branches:
       - main
-jobs: 
+jobs:
   run:
     runs-on: ubuntu-latest
 
@@ -19,18 +19,18 @@ jobs:
         with:
           toolchain: stable #specifies a the latest rust version to install
           override: true #override the default toolchain for the job
-          
+
       - name: Build the project
         run: cargo build --release
 
       - name: print
         run: ./target/debug/fibbot ${{ github.even.inputs.input1 }} ${{ github.even.inputs.input2 }}
-        
+
       # - name: Confirmation in logs
-        # run: |
-        #   if grep -q "Hello, world" $GITHUB_ENV; then
-        #     echo "Hello, world' found in logs ! "  
-        #   else 
-        #     echo "'Hello world' not found in logs"
-        #     exit 1
-        #   fi
+      # run: |
+      #   if grep -q "Hello, world" $GITHUB_ENV; then
+      #     echo "Hello, world' found in logs ! "
+      #   else
+      #     echo "'Hello world' not found in logs"
+      #     exit 1
+      #   fi
